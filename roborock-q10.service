@@ -1,0 +1,14 @@
+[Unit]
+Description=Roborock Q10 MQTT Controller (Buksi)
+After=network.target mosquitto.service
+
+[Service]
+Type=simple
+User=pi
+WorkingDirectory=/home/pi/roborock-q10-daemon
+ExecStart=/home/pi/roborock-q10-daemon/.venv/bin/python /home/pi/roborock-q10-daemon/q10_fetch_map.py
+Restart=always
+RestartSec=15
+
+[Install]
+WantedBy=multi-user.target
