@@ -1,14 +1,24 @@
 [Unit]
-Description=Roborock Q10 MQTT Controller (Buksi)
-After=network.target mosquitto.service
+Description=Roborock Q10 Room-by-Room Cleaning Daemon
+After=network-online.target
+Wants=network-online.target
 
 [Service]
 Type=simple
+
+# WICHTIG: User und Pfade unten an dein System anpassen.
+# Beispiel geht davon aus, dass das Repo unter /home/pi/roborock-q10-daemon
+# liegt und dort auch die .venv aus der README angelegt wurde.
 User=pi
 WorkingDirectory=/home/pi/roborock-q10-daemon
-ExecStart=/home/pi/roborock-q10-daemon/.venv/bin/python /home/pi/roborock-q10-daemon/q10_fetch_map.py
+ExecStart=/home/pi/roborock-q10-daemon/.venv/bin/python3 /home/pi/roborock-q10-daemon/q10_fetch_map.py
+
 Restart=always
 RestartSec=15
+
+# Eigenes Logfile zusätzlich zu journalctl - praktisch für "tail -f"
+StandardOutput=append:/home/pi/roborock-q10-daemon/roborock-q10-daemon.log
+StandardError=append:/home/pi/roborock-q10-daemon/roborock-q10-daemon.log
 
 [Install]
 WantedBy=multi-user.target
