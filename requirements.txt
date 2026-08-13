@@ -1,0 +1,7 @@
+# Bewusst auf die zum Zeitpunkt der Entwicklung getestete Version gepinnt.
+# Neuere Versionen von python-roborock können die interne B01/Q10-Struktur
+# (z. B. device.b01_q10_properties) verändern - siehe README.
+python-roborock==6.2.1
+
+paho-mqtt>=2.0
+pyyaml>=6.0

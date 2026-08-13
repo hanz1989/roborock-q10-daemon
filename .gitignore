@@ -1,0 +1,12 @@
+# Zugangsdaten und Tokens - niemals einchecken
+secrets.yaml
+roborock_token.json
+home_data_cache.pkl
+
+# Logs
+*.log
+
+# Python
+__pycache__/
+*.pyc
+.venv/

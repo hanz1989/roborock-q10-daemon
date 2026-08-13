@@ -6,6 +6,19 @@ This README is written to be followable even if you've never run a Python script
 
 ---
 
+## 📌 Project status
+
+This project exists because, at the time, the Roborock Q10 had **no** native Google Home integration and **no** local API — a custom cloud daemon was the only way to get room-by-room control from Google Home. The original author has since switched to a different vacuum (with native Google Home support), so **active day-to-day testing on real Q10 hardware has stopped**.
+
+What this means in practice:
+
+- The code in this repo is considered **feature-complete and stable** for the Q10 (B01 protocol, `ss*` model suffix) — it was live-tested over multiple days of continuous operation (see the diagnostic logs referenced in past issues/PRs) before the switch.
+- It is now in **low-maintenance mode**: bug reports and pull requests are welcome and will be reviewed, but don't expect fast turnaround or new features from the original author.
+- If your vacuum turns out to be a **Qrevo** (or another model using the newer `V1` protocol), this repo won't help you directly — see the warning box below for how to check, and consider checking whether your vacuum already has native Google Home / Matter support before building anything custom. Many newer Roborock models do.
+- If you get this working well on your own Q10, PRs to fill in the remaining checklist items below (systemd install confirmation on a clean Pi, additional verified room IDs, community testing of the experimental `clean_line` setting) are very welcome and genuinely useful to the next person.
+
+---
+
 ## ⚠️ Before you start: is your vacuum actually supported?
 
 This project was built and tested **specifically for the Roborock Q10** (model string `roborock.vacuum.ss07`, protocol `B01`). If your vacuum is a **Roborock Qrevo** (or another newer model), **this script will most likely NOT work as-is** — Qrevo devices generally speak a different, newer protocol (`V1`) that has a completely different internal structure. Running this daemon against a Qrevo will fail at startup with a clear error message (it won't silently do the wrong thing), but it won't clean anything either.
@@ -170,15 +183,15 @@ There is a separate setting in the Roborock app for cleaning *route density* (ro
 
 ## Status
 
-* [x] Stable cloud control (login, reconnect, health check)
+* [x] Stable cloud control (login, reconnect, health check) — live-verified over 85+ hours continuous runtime, 0 failed health checks
 * [x] Production-ready daemon script for Q10 (B01 protocol)
 * [x] Multi-room cleaning in a single command
 * [x] Configurable cleaning mode / suction level via `secrets.yaml`
-* [ ] Experimental `clean_line` (route density) setting — needs live verification
-* [ ] Final `systemd` service installation on the Pi
-* [ ] Google Home integration (Home Assistant automations)
-* [ ] All room IDs verified (currently only the bathroom)
-* [ ] Qrevo / V1-protocol support (separate effort — not started)
+* [x] `systemd` service file included (`roborock-q10.service`) — adjust the `User`/path placeholders for your own Pi
+* [ ] Experimental `clean_line` (route density) setting — needs live verification (community help welcome)
+* [ ] Google Home integration (Home Assistant automations) — architecture documented above, not built/tested end-to-end by the original author
+* [ ] All room IDs verified (currently only the bathroom, room ID 9)
+* [ ] Qrevo / V1-protocol support — not started, separate effort; see the compatibility warning above
 
 ---
 
